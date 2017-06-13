@@ -35,14 +35,14 @@ Plot_data <- Plot_data[-c(38),]
 #Now for the climate data: Want a free axis graph with precip and temp and then another with VPD (bars)
 read.csv("C:/Users/Mallory/Dropbox (Dissertation Dropbox)/plot_climate.csv")
 str(plot_climate)
-
+dev.off()
 par(mar = c(5,8,2,5))
 par(new=T)
 rect(as.Date("2016-06-02", "%Y-%m-%d"), 0, as.Date("2016-06-07", "%Y-%m-%d"), 50, col = "lightblue")
 rect(as.Date("2016-06-19", "%Y-%m-%d"), 0, as.Date("2016-06-20", "%Y-%m-%d"), 50, col = "lightblue")
 
 par(new=T)
-with(plot_climate, plot(Date, Temp, type="l", col="firebrick", 
+with(plot_climate, plot(Date, Temp, type="l", col="orange", 
              ylab="Temp (C)",
              ylim=c(20,40)))
 
