@@ -70,13 +70,14 @@ str(Plot_data)
 
 w <- ggplot(Plot_data, aes(x = Date, y = Water_Pot, 
                    group = (Date))) +
-  theme(axis.text.x = element_text(angle = 0, hjust = 0),  axis.title.y= element_text(hjust=0.5, size=14), axis.text.y = element_text(colour="grey20",size=8))+
+  theme(axis.text.x = element_text(angle = 0, hjust = 0),  axis.title.y= element_text(hjust=0.5, size=14), axis.text.y = element_text(colour="grey20",size=8, hjust=0.2))+
   ylab(expression(paste(psi[pd])))+
   geom_boxplot(width=1)+
-  theme(plot.margin= unit(c(0.1,0.35,0.05,0.17), "inches"))+
+  theme(plot.margin= unit(c(0.05,0.30,0.05,0.10), "inches"))+
   geom_point(size=1, position = position_jitter(width = 0.2))+theme(axis.title.x=element_blank(),
-                                                 axis.text.x=element_blank(),
-                                                 axis.ticks.x=element_blank())
+                                                                    axis.text.x=element_blank(),
+                                                                    axis.ticks.x=element_blank(),
+                                                                    panel.background = element_blank())
 
 
 v <- ggplot(Plot_data, aes(x = Date, y = Vcmax, 
@@ -84,26 +85,26 @@ v <- ggplot(Plot_data, aes(x = Date, y = Vcmax,
   theme(axis.text.x = element_text(angle = 0, hjust = 0),  axis.title.y= element_text(hjust=0.3, size=12), axis.text.y = element_text(colour="grey20",size=10))+
   ylab("Vcmax")+
   geom_boxplot(width=1)+
-  theme(plot.margin= unit(c(0.05,0.35,0.1,0.17), "inches"))+
+  theme(plot.margin= unit(c(0.05,0.30,0.05,0.15), "inches"))+
   geom_point(size=1, position = position_jitter(width = 0.2))+theme(axis.title.x=element_blank(),
                                                             axis.text.x=element_blank(),
-                                                            axis.ticks.x=element_blank())
+                                                            axis.ticks.x=element_blank(),
+                                                            panel.background = element_blank())
 
 j <- ggplot(Plot_data, aes(x = Date, y = Jmax, 
                       group = (Date))) +
-  theme(axis.text.x = element_text(angle = 0, hjust = 0),  axis.title.y= element_text(hjust=0.5, size=12), axis.text.y = element_text(colour="grey20",size=10))+
+  theme(axis.text.x = element_text(angle = 0, hjust = 0.5),axis.title.y= element_text(hjust=0.5, size=12), axis.text.y = element_text(colour="grey20",size=10))+
   ylab("Jmax")+
   #ylab(bquote('Jmax ('*mu~ 'mol' ~CO[2]~ m^-2~s^-1*')'))+
   geom_boxplot(width=1)+
-  theme(plot.margin= unit(c(0.05,0.35,0.05,0.17), "inches"))+
-  geom_point(size=1, position = position_jitter(width = 0.2))
+  theme(plot.margin= unit(c(0.05,0.30,0.05,0.15), "inches"))+
+  geom_point(size=1, position = position_jitter(width = 0.2))+ theme(panel.background=element_blank())
 
 ?unit
 
-
 plot.new()
 grid.newpage()
-pushViewport(viewport(layout=grid.layout(4,1, heights=unit(c(2,3,4.2,5), c("cm", "cm", "cm", "cm")))))
+pushViewport(viewport(layout=grid.layout(4,1, heights=unit(c(3,3,3,4.5), c("cm", "cm", "cm", "cm")))))
 
 pushViewport(viewport(layout.pos.row=2))
 print(w, newpage=FALSE)
@@ -124,20 +125,23 @@ par(fig=gridFIG(), new=TRUE)
 par(mai = c(0.2,0.7,0.05,0.5), tck=0.04, mgp=c(1.5,0,0))
 par(bty="n")
 par(new=T)
-with(plot_climate, plot(Date, Temp, type="l", ylab='',col="tomato", ylim=c(20,40)), xlab=NA)
-mtext(side=2, cex=0.7, line=1.5, "Temp (C)")
+
+with(plot_climate, plot(Date, Temp, axes=FALSE, type="l", ylab='',cex.axis=0.75, col="orangered", ylim=c(20,40)), xlab=NA)
+axis.Date(side = 3, plot_climate$Date, format = "%b %d", pos=42, cex.axis=0.75)
+axis(2, cex.axis=0.75)
+mtext(side=2, cex=0.86, line=0.8, "Temp (C)")
 
 rect(as.Date("2016-06-02", "%Y-%m-%d"), 0, as.Date("2016-06-07", "%Y-%m-%d"), 40, col = "lightblue")
 rect(as.Date("2016-06-19", "%Y-%m-%d"), 0, as.Date("2016-06-20", "%Y-%m-%d"), 40, col = "lightblue")
 par(new=T)
-with(plot_climate, plot(Date, Temp, type="l", ylab='', col="tomato", ylim=c(20,40)), xlab=NA, ylab=NA)
+with(plot_climate, plot(Date, Temp, type="l", ylab='', axes=FALSE, col="orangered", ylim=c(20,40)), xlab=NA, ylab=NA)
 par(new = T)
-with(plot_climate, plot(Date, VPD, type="l", col="mediumvioletred", axes=F, xlab=NA, ylab=NA)) 
-axis(side = 4)
-mtext(side = 4, cex=0.7, line = 1.5, "VPD (KPa)")
+with(plot_climate, plot(Date, VPD, type="l", col="darkorchid2", axes=F, xlab=NA, ylab=NA)) 
+axis(side = 4, cex.axis=0.75)
+mtext(side = 4, cex=0.86, cex.lab=0.5, line = 1.2, "VPD (KPa)", cex.axis=0.75)
 par(new=T)
 with(plot_climate, barplot(Precip, col="blue", axes=F, ylab='', xlab=NA, ylim=c(0,40)))
-axis(side=2, ylim=c(0, 40), lwd=1, line=3, cex.lab=0.5)
-mtext(side=2, line=4, cex=0.7, "Precip (mm)")
+axis(side=2, ylim=c(0, 40), lwd=1, line=1.8, cex.axis=0.75)
+mtext(side=2, line=2.4, cex=0.86, "Precip (mm)")
 popViewport()
 
