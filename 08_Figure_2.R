@@ -80,5 +80,5 @@ Refs <- ggplot(hyperspectral_long, aes(y=reflectance, x=wavelength, group=unique
 grid.newpage()
 grid.arrange(Refs, SR_plotV, SR_plotJ, heights=c(6,3,3.7))
 g <- arrangeGrob(Refs, SR_plotV, SR_plotJ, heights=c(6,3,3.7))
-ggsave(file="C:/Users/Mallory/Dropbox (Dissertation Dropbox)/Barnes_PLOSOne_Poplar/Revised_9_2017/Submitted_Docs/Figure_2.TIFF", g)
+ggsave(file="C:/Users/Mallory/Dropbox (Dissertation Dropbox)/Barnes_PLOSOne_Poplar/Revised_9_2017/Submitted_Docs/Figure_2.TIFF", g, dpi=400, width=13.2, units="cm")
 
