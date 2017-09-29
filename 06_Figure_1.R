@@ -2,7 +2,7 @@
 #Purpose: Create Manuscript Figure 1 (Timeseries of water potential, climate, and Vcmax/Jmax)
 #Written by: Mallory Barnes
 #June 2017
-
+#Input: All cleaned data -> physiology, water potential, and climate data 
 library(lubridate)
 library(ggplot2)
 library(plyr)
@@ -18,6 +18,9 @@ library(gridExtra)
 library(outliers)
 library(gridBase)
 
+#This figure is very complicated and utilizes both Base R and ggplot graphics to get the 
+#Desired appearance
+grid.newpage()
 #Figure 1------------------------------------------------------------
 Plot_data <- read.csv("C:/Users/Mallory/Dropbox/Drought_Expt_2016/all_data_3_6_2017.csv")
 str(Plot_data)
@@ -34,10 +37,12 @@ Plot_data <- Plot_data[-c(38),]
 
 #Figure 1: Multipanel stacked figure; climate/physiology
 #Now for the climate data: Want a free axis graph with precip and temp and then another with VPD (bars)
-read.csv("C:/Users/Mallory/Dropbox (Dissertation Dropbox)/plot_climate.csv")
+plot_climate <- read.csv("C:/Users/Mallory/Dropbox (Dissertation Dropbox)/Barnes_PLOSOne_Poplar/plot_climate.csv")
 str(plot_climate)
+plot_climate$Date <- as.Date(plot_climate$Date)
 plot_climate <- subset(plot_climate, Date > "2016-05-23")
 dev.off()
+plot.new()
 par(mar = c(5,8,2,5))
 par(new=T)
 rect(as.Date("2016-06-02", "%Y-%m-%d"), 0, as.Date("2016-06-07", "%Y-%m-%d"), 50, col = "lightblue")
@@ -62,7 +67,8 @@ mtext(side=2, line=4, "Precip (mm)")
 plot(w)
 
 #For the boxplots: 
-
+#Start here?!----------------------------------
+#still can't save it properly
 #Physiological data
 #Water Potential Data 
 str(Plot_data)
@@ -77,7 +83,9 @@ w <- ggplot(Plot_data, aes(x = Date, y = Water_Pot,
   geom_point(size=1, position = position_jitter(width = 0.2))+theme(axis.title.x=element_blank(),
                                                                     axis.text.x=element_blank(),
                                                                     axis.ticks.x=element_blank(),
-                                                                    panel.background = element_blank())
+                                                                    panel.background = element_blank())+
+        theme(axis.line.x = element_line(color="black", size = 0.5),
+              axis.line.y = element_line(color="black", size = 0.5))
 
 
 v <- ggplot(Plot_data, aes(x = Date, y = Vcmax, 
@@ -89,7 +97,9 @@ v <- ggplot(Plot_data, aes(x = Date, y = Vcmax,
   geom_point(size=1, position = position_jitter(width = 0.2))+theme(axis.title.x=element_blank(),
                                                             axis.text.x=element_blank(),
                                                             axis.ticks.x=element_blank(),
-                                                            panel.background = element_blank())
+                                                            panel.background = element_blank())+
+        theme(axis.line.x = element_line(color="black", size = 0.5),
+              axis.line.y = element_line(color="black", size = 0.5))
 
 j <- ggplot(Plot_data, aes(x = Date, y = Jmax, 
                       group = (Date))) +
@@ -98,9 +108,10 @@ j <- ggplot(Plot_data, aes(x = Date, y = Jmax,
   #ylab(bquote('Jmax ('*mu~ 'mol' ~CO[2]~ m^-2~s^-1*')'))+
   geom_boxplot(width=1)+
   theme(plot.margin= unit(c(0.05,0.30,0.05,0.15), "inches"))+
-  geom_point(size=1, position = position_jitter(width = 0.2))+ theme(panel.background=element_blank())
+  geom_point(size=1, position = position_jitter(width = 0.2))+ theme(panel.background=element_blank())+
+        theme(axis.line.x = element_line(color="black", size = 0.5),
+              axis.line.y = element_line(color="black", size = 0.5))
 
-?unit
 
 plot.new()
 grid.newpage()
@@ -143,5 +154,12 @@ par(new=T)
 with(plot_climate, barplot(Precip, col="blue", axes=F, ylab='', xlab=NA, ylim=c(0,40)))
 axis(side=2, ylim=c(0, 40), lwd=1, line=1.8, cex.axis=0.75)
 mtext(side=2, line=2.4, cex=0.86, "Precip (mm)")
+
+
+tiff("Fig_1_tryit.TIFF")
+pushViewport(viewport())
 popViewport()
+dev.off()
+
+ggsave("C:/Users/Mallory/Dropbox (Dissertation Dropbox)/Barnes_PLOSOne_Poplar/Revised_9_2017/Submitted_Docs/Fig1_3.TIFF", dpi=400)
 
