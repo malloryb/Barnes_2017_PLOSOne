@@ -3,6 +3,8 @@
 #Written by: Mallory Barnes
 #June 2017
 
+library(plyr)
+
 Plot_data <- read.csv("C:/Users/Mallory/Dropbox/Drought_Expt_2016/all_data_3_6_2017.csv")
 str(Plot_data)
 #Cleanup data file:
@@ -80,3 +82,4 @@ summary(Plot_data)
 sd(Plot_data$Vcmax)
 sd(Plot_data$Jmax)
 sd(Plot_data$Water_Pot)
+
