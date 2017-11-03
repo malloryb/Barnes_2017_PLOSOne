@@ -3,8 +3,10 @@
 #Creator: Mallory Barnes
 #June 2017
 
-#Load Packages----------------------------
+
+
 ##### Install Pecan: Only need to do once #####
+#See PeCAN documentation at: https://github.com/PecanProject/pecan/blob/master/modules/photosynthesis/vignettes/ResponseCurves.Rmd
 #install PEcAn.photosynthesis as a stand alone
 #need Rtools installed
 #need rjags installed in R and also JAGS (stand alone application) installed on your computer
@@ -16,7 +18,7 @@ if (!require("PEcAn.photosynthesis",character.only = TRUE))
   install_github("PecanProject/pecan/modules/photosynthesis") 
 }
 
-#See PeCAN documentation at: https://github.com/PecanProject/pecan/blob/master/modules/photosynthesis/vignettes/ResponseCurves.Rmd
+#Load Packages----------------------------
 #Grab the following packages before you start
 library(devtools)
 library(ggplot2)
@@ -30,9 +32,9 @@ library(PEcAn.photosynthesis)
 setwd("C:/Users/rsstudent/Dropbox/")
 path_files <- "Summer_2016_Drought_Experiment/Licor_data/"
 filenames <- dir(path_files)
-str(filenames)
 
 fileswithpath=paste0(path_files, filenames)
+
 ## Load files to a list
 master = lapply(fileswithpath, read.Licor)
 
@@ -47,12 +49,11 @@ for(i in 1:length(master)){
 }
 
 #after the QC process combine the files into one data frame
-
 #Method suggested in pecan documentation was giving unequal columns error so I used "bind_rows" from dplyr instead: 
 
 dat <- bind_rows(master)
 
-#If want both the "bad" and "good" observations in a data file, write out .csv file: 
+#If you want both the "bad" and "good" observations in a data file, write out .csv file before the following step: 
 #e.g. write.csv(dat, "QC_bad_and_good.csv")
 
 ## if QC was done, remove both unchecked points and those that fail QC
