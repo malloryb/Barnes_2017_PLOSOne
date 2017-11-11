@@ -5,7 +5,7 @@
 
 library(plyr)
 
-Plot_data <- read.csv("C:/Users/Mallory/Dropbox/Drought_Expt_2016/all_data_3_6_2017.csv")
+Plot_data <- read.csv("C:/Users/rsstudent/Dropbox (Personal)/Drought_Expt_2016/all_data_3_6_2017.csv")
 str(Plot_data)
 #Cleanup data file:
 #Format Dates properly: 
