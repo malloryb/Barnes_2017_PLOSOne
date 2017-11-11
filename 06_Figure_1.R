@@ -72,6 +72,7 @@ plot(w)
 #Physiological data
 #Water Potential Data 
 str(Plot_data)
+dev.off()
 
 
 w <- ggplot(Plot_data, aes(x = Date, y = Water_Pot, 
@@ -111,10 +112,10 @@ j <- ggplot(Plot_data, aes(x = Date, y = Jmax,
   geom_point(size=1, position = position_jitter(width = 0.2))+ theme(panel.background=element_blank())+
         theme(axis.line.x = element_line(color="black", size = 0.5),
               axis.line.y = element_line(color="black", size = 0.5))
-
-
+#graphics.off()
 plot.new()
 grid.newpage()
+dev.new(width=8, height=12)
 pushViewport(viewport(layout=grid.layout(4,1, heights=unit(c(3,3,3,4.5), c("cm", "cm", "cm", "cm")))))
 
 pushViewport(viewport(layout.pos.row=2))
@@ -156,10 +157,12 @@ axis(side=2, ylim=c(0, 40), lwd=1, line=1.8, cex.axis=0.75)
 mtext(side=2, line=2.4, cex=0.86, "Precip (mm)")
 
 
-tiff("Fig_1_tryit.TIFF")
-pushViewport(viewport())
-popViewport()
+#tiff("Fig_1_tryit.TIFF")
+#pushViewport(viewport())
+#popViewport()
+dev.print(tiff, 'figure_1_again.TIFF', width=5, height=6, unit="in", res=300)
+#Then manually resize in paint.net :-/ 
 dev.off()
 
-ggsave("C:/Users/Mallory/Dropbox (Dissertation Dropbox)/Barnes_PLOSOne_Poplar/Revised_9_2017/Submitted_Docs/Fig1_3.TIFF", dpi=400)
+#ggsave("C:/Users/Mallory/Dropbox (Dissertation Dropbox)/Barnes_PLOSOne_Poplar/Revised_9_2017/Submitted_Docs/Fig1_3.TIFF", dpi=400)
 
