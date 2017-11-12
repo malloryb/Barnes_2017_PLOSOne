@@ -187,5 +187,3 @@ FWHM = function(x){
   
 }
 
-
-
