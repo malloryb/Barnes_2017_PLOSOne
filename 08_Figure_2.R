@@ -11,9 +11,9 @@ library(grid)
 library(gridExtra)
 
 #Input
-hyperspectral_long <- read.csv("C:/Users/Mallory/Dropbox/Drought_Expt_2016/hyperspec_long.csv")
-SR_Jmax <- read.csv("C:/Users/Mallory/Dropbox/Paper_2/PLSR_result/Jmax_test_stressed_period/5comps(n=73)_test/selectivityRatio.csv")
-SR_Vcmax <- read.csv("C:/Users/Mallory/Dropbox/Paper_2/PLSR_result/Vcmax_test_stressed_Period/2comps(n=73)_test/selectivityRatio.csv")
+hyperspectral_long <- read.csv("C:/Users/rsstudent/Dropbox/Drought_Expt_2016/hyperspec_long.csv")
+SR_Jmax <- read.csv("C:/Users/rsstudent/Dropbox/Paper_2/PLSR_result/Jmax_test_stressed_period/5comps(n=73)_test/selectivityRatio.csv")
+SR_Vcmax <- read.csv("C:/Users/rsstudent/Dropbox/Paper_2/PLSR_result/Vcmax_test_stressed_Period/2comps(n=73)_test/selectivityRatio.csv")
 
 #Maniuplate reflectance to get mean, max and min for each wavelength
 hyperspect_stats <- ddply(hyperspectral_long, .(wavelength), summarise, mean_ref=mean(reflectance, na.rm=TRUE), max_ref=max(reflectance,na.rm=TRUE), min_ref=min(reflectance,na.rm=TRUE))
@@ -80,5 +80,5 @@ Refs <- ggplot(hyperspectral_long, aes(y=reflectance, x=wavelength, group=unique
 grid.newpage()
 grid.arrange(Refs, SR_plotV, SR_plotJ, heights=c(6,3,3.7))
 g <- arrangeGrob(Refs, SR_plotV, SR_plotJ, heights=c(6,3,3.7))
-ggsave(file="C:/Users/Mallory/Dropbox (Dissertation Dropbox)/Barnes_PLOSOne_Poplar/Revised_9_2017/Submitted_Docs/Figure_2.TIFF", g, dpi=400, width=13.2, units="cm")
+ggsave(file="C:/Users/rsstudent/Dropbox (Dissertation Dropbox)/Barnes_PLOSOne_Poplar/Revised_9_2017/Submitted_Docs/Figure_2.TIFF", g, dpi=400, width=13.2, units="cm")
 
